@@ -17,7 +17,15 @@ export default function App() {
     const notasActuales = obtenerNotas() 
     const nuevasNotas = [ ... notasActuales, notaNueva] 
     localStorage.setItem('notas', JSON.stringify(nuevasNotas)) 
+    return nuevasNotas 
   } 
+ 
+function  actualizarNota(index, titulo, contenido) { 
+    const notasActuales = obtenerNotas() 
+    notasActuales[index] = { titulo, contenido } 
+    localStorage.setItem('notas', JSON.stringify(notasActuales)) 
+    return notasActuales; 
+} 
  
   const manejarSubmit = (e) => { 
     e.preventDefault() 
@@ -27,46 +35,93 @@ export default function App() {
     setMostrarFormulario(false) 
   } 
  
+  const manejarClickNota = (nota, index) => { 
+    setNotaSeleccionada (nota) 
+    setEditIndex(index) 
+  } 
  
+  const cerrarPopup = () => { 
+    setNotaSeleccionada(null) 
+    setEditIndex(null) 
+  } 
+ 
+  const manejarCambioTitulo = (e) => { 
+    setNotaSeleccionada({ ...notaSeleccionada, titulo: e.target.value}) 
+  } 
+  const manejarCambioContenido = (e) => { 
+    setNotaSeleccionada({ ...notaSeleccionada, contenido: e.target.value}) 
+  } 
+ 
+  const manejarGuardar = (e) => { 
+    e.preventDefault() 
+    const nuevasNotas = actualizarNota(editIndex, notaSeleccionada.titulo, notaSeleccionada.contenido ) 
+    setNotas(nuevasNotas); // Actualiza el estado de notas
+    cerrarPopup();
+  } 
+ 
+  useEffect(() => { 
+    setNotas(obtenerNotas()) 
+  }, []) 
+ 
+  const [notas, setNotas] = useState(obtenerNotas) 
   const [mostrarFormulario, setMostrarFormulario] = useState(false); 
   const [titulo, setTitulo] = useState(''); 
   const [contenido, setContenido] = useState('') 
-   
-  return ( 
-    <div className="B"> 
-      <button onClick={()=> setMostrarFormulario(true)}> 
-     + 
-     </button> 
-     <div className={`form-container ${mostrarFormulario ? 'visible' : 'hidden'}`}> 
-     <form onSubmit={manejarSubmit}> 
-     <input 
-     type="text" 
-     placeholder="titulo" 
-     value={titulo} 
-     onChange={(e) => setTitulo(e.target.value)} 
-     /> 
-      <input 
-     type="text" 
-     placeholder="contenido" 
-     value={contenido} 
-     onChange={(e) => setContenido(e.target.value)} 
-     /> 
-     <button type="submit">  
-     Guardar 
-     </button>    
-     </form> 
-    </div> 
+  const [notaSeleccionada, setNotaSeleccionada] = useState(null) 
+  const [editIndex, setEditIndex] = useState(null) 
  
-    <ul> 
-    {obtenerNotas().map((nota, index) => ( 
-      <li key={index}> 
-        <strong> 
-          {nota.titulo}: 
-        </strong> {nota.contenido} 
-        </li> 
-    ))} 
-    </ul> 
-    </div> 
-  ); 
- 
-}
+        return ( 
+          <div className="B"> 
+            <button onClick={() => setMostrarFormulario(!mostrarFormulario)}> 
+              Añadir Nota 
+            </button> 
+             
+            <div className={`form-container ${mostrarFormulario ? 'visible' : 'hidden'}`}> 
+              <form onSubmit={manejarSubmit}> 
+                <input 
+                  type="text" 
+                  placeholder="Título" 
+                  value={titulo} 
+                  onChange={(e) => setTitulo(e.target.value)} 
+                /> 
+                <input 
+                  type="text" 
+                  placeholder="Contenido" 
+                  value={contenido} 
+                  onChange={(e) => setContenido(e.target.value)} 
+                /> 
+                <button type="submit">Guardar Nota</button> 
+              </form> 
+            </div> 
+       
+            <div className="notas-container"> 
+              {notas.map((nota, index) => ( 
+                <div key={index} className="nota-caja" onClick={() => manejarClickNota(nota, index)}> 
+                  <strong>{nota.titulo}</strong> 
+                  <p>{nota.contenido}</p>
+                </div> 
+              ))} 
+            </div> 
+       
+            {notaSeleccionada && ( 
+              <div className="popup"> 
+                <div className="popup-inner"> 
+                  <button onClick={cerrarPopup}>Cerrar</button> 
+                  <form onSubmit={manejarGuardar}> 
+                    <input 
+                      type="text" 
+                      value={notaSeleccionada.titulo} 
+                      onChange={manejarCambioTitulo} 
+                    /> 
+                    <textarea 
+                      value={notaSeleccionada.contenido} 
+                      onChange={manejarCambioContenido} 
+                    /> 
+                    <button type="submit">Guardar Cambios</button> 
+                  </form> 
+                </div> 
+              </div> 
+            )} 
+          </div> 
+        ); 
+      }
