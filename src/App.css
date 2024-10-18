@@ -67,3 +67,27 @@
   white-space: nowrap; 
   max-height: 100px; /* Ajustar según el tamaño deseado */ 
 }
+
+/* Estilos comunes para los botones */
+.btn {
+  background-color: #4CAF50; /* Color de fondo */
+  border: none; /* Sin borde */
+  color: white; /* Color del texto */
+  padding: 10px 20px; /* Espaciado interno */
+  text-align: center; /* Alineación del texto */
+  text-decoration: none; /* Sin subrayado */
+  display: inline-block; /* Mostrar en línea */
+  font-size: 16px; /* Tamaño de la fuente */
+  margin: 4px 2px; /* Márgenes */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  border-radius: 5px; /* Bordes redondeados */
+}
+
+/* Estilos adicionales para los botones específicos si es necesario */
+.btn-primary {
+  background-color: #008CBA; /* Color para un botón primario */
+}
+
+.btn-danger {
+  background-color: #f44336; /* Color para un botón de peligro */
+}
