@@ -40,3 +40,30 @@
 .popup-inner h2 { 
   margin-top: 0; 
 }
+
+.nota-caja { 
+  border: 1px solid #ddd; 
+  padding: 10px; 
+  margin: 10px; 
+  border-radius: 5px; 
+  background-color: #f9f9f9; 
+  cursor: pointer; 
+  overflow: hidden; 
+  width: 200px; /* Fijar el ancho */ 
+  height: 150px; /* Fijar la altura */ 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: space-between; 
+} 
+ 
+.nota-caja strong { 
+  display: block; 
+  margin-bottom: 5px; 
+} 
+ 
+.nota-caja p { 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  white-space: nowrap; 
+  max-height: 100px; /* Ajustar según el tamaño deseado */ 
+}
