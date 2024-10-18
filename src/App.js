@@ -26,6 +26,13 @@ function  actualizarNota(index, titulo, contenido) {
     localStorage.setItem('notas', JSON.stringify(notasActuales)) 
     return notasActuales; 
 } 
+
+function eliminarNota(index){
+  const notasActuales= obtenerNotas()
+  const nuevasNotas= notasActuales.filter((_, i) => i !== index)
+  localStorage.setItem('notas', JSON.stringify(nuevasNotas))
+  return nuevasNotas
+}
  
   const manejarSubmit = (e) => { 
     e.preventDefault() 
@@ -58,6 +65,12 @@ function  actualizarNota(index, titulo, contenido) {
     setNotas(nuevasNotas); // Actualiza el estado de notas
     cerrarPopup();
   } 
+
+  const manejarEliminar=(index)=>{
+    const nuevasNotas = eliminarNota(index);
+    setNotas(nuevasNotas);
+    cerrarPopup();
+  }
  
   useEffect(() => { 
     setNotas(obtenerNotas()) 
@@ -119,6 +132,7 @@ function  actualizarNota(index, titulo, contenido) {
                     /> 
                     <button type="submit">Guardar Cambios</button> 
                   </form> 
+                  <button onClick={() => manejarEliminar(editIndex)}>Eliminar Nota</button>
                 </div> 
               </div> 
             )} 
