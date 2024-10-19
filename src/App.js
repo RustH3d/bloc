@@ -65,58 +65,68 @@ export default function App() {
   }; 
  
   return ( 
-    <div className="B"> 
-    <button className="btn" onClick={() => setMostrarFormulario(!mostrarFormulario)}> 
-      + 
-    </button> 
- 
-    <div className={`form-container ${mostrarFormulario ? 'visible' : 'hidden'}`}> 
-      <form onSubmit={manejarSubmit}> 
-        <input 
-          type="text" 
-          placeholder="Título" 
-          value={titulo} 
-          onChange={(e) => setTitulo(e.target.value)} 
-        /> 
-        <input 
-          type="text" 
-          placeholder="Contenido" 
-          value={contenido} 
-          onChange={(e) => setContenido(e.target.value)} 
-        /> 
-        <button className="btn btn-primary" type="submit">Guardar Nota</button> 
-      </form> 
-    </div> 
- 
-    <div className="notas-container"> 
-      {notas.map((nota, index) => ( 
-        <div key={index} className="nota-caja" onClick={() => manejarClickNota(nota, index)}> 
-          <strong>{nota.titulo}</strong> 
-          <p>{nota.contenido}</p> 
-        </div> 
-      ))} 
-    </div> 
- 
-    {notaSeleccionada && ( 
-      <div className="popup"> 
-        <div className="popup-inner"> 
-          <button className="btn" onClick={cerrarPopup}>Cerrar</button> 
-          <form onSubmit={manejarGuardar}> 
-            <input 
-              type="text" 
-              value={notaSeleccionada.titulo} 
-              onChange={manejarCambioTitulo} 
-            /> 
-            <textarea 
-              value={notaSeleccionada.contenido} 
-              onChange={manejarCambioContenido} 
-            /> 
-            <button className="btn btn-primary" type="submit">Guardar Cambios</button> 
-          </form> 
-          <button className="btn btn-danger" onClick={manejarEliminar}>Eliminar Nota</button> 
-        </div> 
-      </div> 
-    )} 
-  </div> 
+    <div className="B">
+  <button className="btn" onClick={() => setMostrarFormulario(!mostrarFormulario)}>
+    +
+  </button>
+
+  <div className={`form-container ${mostrarFormulario ? 'visible' : 'hidden'}`}>
+    <form onSubmit={manejarSubmit}>
+      <input
+        type="text"
+        className="popup-input"
+        placeholder="Título"
+        value={titulo}
+        onChange={(e) => setTitulo(e.target.value)}
+      />
+      <input
+        type="text"
+        className="popup-input"
+        placeholder="Contenido"
+        value={contenido}
+        onChange={(e) => setContenido(e.target.value)}
+      />
+      <button className="btn btn-primary" type="submit">Guardar Nota</button>
+    </form>
+  </div>
+
+  <div className="notas-container">
+    {notas.map((nota, index) => (
+      <div key={index} className="nota-caja" onClick={() => manejarClickNota(nota, index)}>
+        <strong>{nota.titulo}</strong>
+        <p>{nota.contenido}</p>
+      </div>
+    ))}
+  </div>
+
+  {notaSeleccionada && (
+    <div className="popup">
+      <div className="popup-inner">
+        <button className="close-button" onClick={cerrarPopup}>×</button>
+        <form onSubmit={manejarGuardar}>
+          <input
+            type="text"
+            className="popup-input"
+            value={notaSeleccionada.titulo}
+            onChange={manejarCambioTitulo}
+            placeholder="Título"
+          />
+          <textarea
+            className="popup-textarea"
+            value={notaSeleccionada.contenido}
+            onChange={manejarCambioContenido}
+            placeholder="Contenido"
+          />
+          <div className="popup-buttons">
+            <button className="btn btn-primary" type="submit">Guardar Cambios</button>
+            <button type="button" className="btn btn-danger" onClick={manejarEliminar}>Eliminar Nota</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  )}
+</div>
+
+
   )
 }
