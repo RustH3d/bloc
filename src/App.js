@@ -1,8 +1,8 @@
-
 import './App.css';
 import React, { useState, useEffect } from 'react';
 import { obtenerNotas, añadirNota, actualizarNota, eliminarNota } from './NotasService';
-import Nota from './Nota'; 
+import Nota from './Nota';
+import BarraBusqueda from './components/BarraBusqueda'; // Asegúrate de que este componente esté importado
 
 export default function App() {
   const [notas, setNotas] = useState(obtenerNotas());
@@ -11,8 +11,8 @@ export default function App() {
   const [contenido, setContenido] = useState('');
   const [notaSeleccionada, setNotaSeleccionada] = useState(null);
   const [editIndex, setEditIndex] = useState(null);
+  const [busqueda, setBusqueda] = useState('');
   const [modoOscuro, setModoOscuro] = useState(false); // Estado para el modo oscuro
-  const [filtro, setFiltro] = useState(''); // Estado para la búsqueda
 
   useEffect(() => {
     setNotas(obtenerNotas());
@@ -21,8 +21,8 @@ export default function App() {
   const manejarSubmit = (e) => {
     e.preventDefault();
     if (titulo.trim() === '') {
-      alert('El título no puede estar vacío');
-      return; 
+      alert('El título no puede estar vacío'); // Muestra un mensaje de error si el título está vacío
+      return;
     }
     const nuevasNotas = añadirNota(titulo, contenido);
     setNotas(nuevasNotas);
@@ -30,6 +30,10 @@ export default function App() {
     setContenido('');
     setMostrarFormulario(false);
   };
+
+  const notasFiltradas = notas.filter((nota) =>
+    nota.titulo.toLowerCase().includes(busqueda.toLowerCase())
+  );
 
   const manejarClickNota = (nota, index) => {
     setNotaSeleccionada(nota);
@@ -43,10 +47,6 @@ export default function App() {
 
   const manejarGuardar = (e) => {
     e.preventDefault();
-    if (notaSeleccionada.titulo.trim() === '') {
-      alert('El título no puede estar vacío');
-      return;
-    }
     const nuevasNotas = actualizarNota(editIndex, notaSeleccionada.titulo, notaSeleccionada.contenido);
     setNotas(nuevasNotas);
     cerrarPopup();
@@ -58,24 +58,19 @@ export default function App() {
     cerrarPopup();
   };
 
-  const notasFiltradas = notas.filter(nota =>
-    nota.titulo.toLowerCase().includes(filtro.toLowerCase())
-  );
-
   return (
     <div className={`App ${modoOscuro ? 'modo-oscuro' : ''}`}>
       <button className="btn" onClick={() => setMostrarFormulario(!mostrarFormulario)}>
-        +
+        Agregar Nota
       </button>
+
       <button className="btn" onClick={() => setModoOscuro(!modoOscuro)}>
         {modoOscuro ? 'Modo Claro' : 'Modo Oscuro'}
       </button>
-      <input
-        type="text"
-        placeholder="Buscar por título..."
-        value={filtro}
-        onChange={(e) => setFiltro(e.target.value)}
-        className="barra-busqueda"
+
+      <BarraBusqueda
+        valorBusqueda={busqueda}
+        onBuscar={setBusqueda}
       />
 
       <div className={`form-container ${mostrarFormulario ? 'visible' : 'hidden'}`}>
@@ -100,10 +95,10 @@ export default function App() {
 
       <div className="notas-container">
         {notasFiltradas.map((nota, index) => (
-          <Nota 
-            key={index} 
-            nota={nota} 
-            onClick={() => manejarClickNota(nota, index)} 
+          <Nota
+            key={index}
+            nota={nota}
+            onClick={() => manejarClickNota(nota, index)} // Usar la función definida aquí
           />
         ))}
       </div>

@@ -5,6 +5,10 @@
   transition: background-color 0.3s, color 0.3s;
 }
 
+.modo-oscuro .nota-caja:hover {
+  background-color: #555; /* Cambia el fondo al pasar el mouse */
+  color: #fff; /* Asegura que el texto siga siendo blanco al hacer hover */
+}
 /* Estilos para el modo oscuro */
 .modo-oscuro {
   background-color: #1e1e1e;
