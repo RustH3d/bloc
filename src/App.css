@@ -1,4 +1,55 @@
-/* Estilo de la caja de notas */
+/* Estilos para la aplicación en general */
+.App {
+  background-color: #ffffff;
+  color: #000000;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Estilos para el modo oscuro */
+.modo-oscuro {
+  background-color: #1e1e1e;
+  color: #f1f1f1;
+}
+
+/* Estilos para la barra de búsqueda */
+.barra-busqueda {
+  padding: 8px;
+  margin: 16px 0;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Estilos para la barra de búsqueda en modo oscuro */
+.modo-oscuro .barra-busqueda {
+  background-color: #2c2c2c;
+  color: #f1f1f1;
+  border: 1px solid #444;
+}
+
+/* Estilos del contenedor del formulario */
+.form-container {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  opacity: 0;
+}
+
+.form-container.visible {
+  max-height: 100px; /* Ajusta según el tamaño del formulario */
+  opacity: 1;
+}
+
+/* Estilos del contenedor de notas */
+.notas-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Estilos de cada caja de nota */
 .nota-caja {
   border: 1px solid #ddd;
   padding: 10px;
@@ -14,12 +65,10 @@
   justify-content: space-between;
 }
 
-/* Estilos para el contenedor de notas */
-.notas-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 20px;
+/* Modo oscuro para las notas */
+.modo-oscuro .nota-caja {
+  background-color: #2c2c2c;
+  border-color: #444;
 }
 
 /* Estilos para el popup */
@@ -47,6 +96,13 @@
   position: relative;
 }
 
+/* Modo oscuro para el popup */
+.modo-oscuro .popup-inner {
+  background-color: #333;
+  color: #f1f1f1;
+}
+
+/* Botón de cerrar en el popup */
 .close-button {
   position: absolute;
   top: 10px; /* Más cerca del borde superior */
@@ -54,9 +110,10 @@
   background: none;
   border: none;
   font-size: 24px; /* Aumenta el tamaño del icono de cerrar */
-  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  cursor: pointer;
   color: #f44336; /* Color del icono de cerrar */
-  padding: 5px; /* Espaciado adicional para aumentar el área de clic */}
+  padding: 5px; /* Espaciado adicional para aumentar el área de clic */
+}
 
 /* Estilos para los títulos e inputs dentro del popup */
 .popup-inner h2 {
@@ -74,12 +131,21 @@
   box-sizing: border-box;
 }
 
+/* Estilos para el modo oscuro en los inputs del popup */
+.modo-oscuro .popup-input,
+.modo-oscuro .popup-textarea {
+  background-color: #444;
+  color: #f1f1f1;
+  border-color: #555;
+}
+
+/* Estilos para el área de texto del popup */
 .popup-textarea {
   min-height: 80px;
   resize: vertical;
 }
 
-/* Estilos para el contenedor de botones en el popup */
+/* Contenedor de botones en el popup */
 .popup-buttons {
   display: flex;
   justify-content: space-between;
@@ -97,13 +163,26 @@
   border-radius: 5px;
 }
 
+/* Botón principal */
 .btn-primary {
   background-color: #008CBA;
 }
 
+/* Botón de peligro (eliminar) */
 .btn-danger {
   background-color: #f44336;
 }
 
-/* Botón de cierre del popup */
+/* Modo oscuro para botones */
+.modo-oscuro .btn {
+  background-color: #444;
+  color: #f1f1f1;
+}
 
+.modo-oscuro .btn-primary {
+  background-color: #005f8a;
+}
+
+.modo-oscuro .btn-danger {
+  background-color: #d32f2f;
+}
